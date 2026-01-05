@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+  namespace: database 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+      - name: inventory-service
+        image: tuongndb1609/inventory-service:v1 
+        imagePullPolicy: IfNotPresent 
+        ports:
+        - containerPort: 8080
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: update
+        - name: SPRING_OUTPUT_ANSI_ENABLED
+          value: ALWAYS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service
+  namespace: database
+spec:
+  selector:
+    app: inventory-service
+  ports:
+  - protocol: TCP
+    port: 80          
+    targetPort: 8080   
+  type: ClusterIP     
