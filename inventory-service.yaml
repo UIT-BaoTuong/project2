@@ -19,10 +19,7 @@ spec:
         imagePullPolicy: IfNotPresent 
         ports:
         - containerPort: 8080
-        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-          value: update
-        - name: SPRING_OUTPUT_ANSI_ENABLED
-          value: ALWAYS
+
 ---
 apiVersion: v1
 kind: Service
